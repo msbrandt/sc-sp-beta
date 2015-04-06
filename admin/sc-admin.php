@@ -15,7 +15,6 @@
 					<th>SC ID</th>
 					<th>Track</th>
 					<th>Duration</th>
-					<th>Artwork</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -39,7 +38,6 @@
 					<th>SC ID</th>
 					<th>Track</th>
 					<th>Duration</th>
-					<th>Artwork</th>
 				</tr>
 			</thead>
 			<tbody>

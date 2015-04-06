@@ -78,11 +78,11 @@
 	cursor: pointer;
 	color: #555;
 }
-#select-to-load .sel-box ul li:hover{
+#select-to-load .sel-box table tr:hover{
 	color: #000;
 }
 
-#select-to-load .sel-box ul li.act{
+#select-to-load .sel-box table tr.act{
 	background: #0f0;
 	color: #000;
 }
@@ -110,33 +110,17 @@
 .hidden-data{
 	display: none;
 }
-.admin-tlb{
-	width: 100%;
-	/*background: #f00;*/
-	border: 1px solid #333;
-}
 .admin-tlb thead tr{
 	width: 100%;
 	background: #FF6500;
 }
-.admin-tlb thead tr th:first-of-type{
-	width: 10%;
-}
-.admin-tlb thead tr th:nth-of-type(2){
-	width: 50%;
-}
-.admin-tlb thead tr th:nth-of-type(3){
-	width: 10%;
-}
-.admin-tlb thead tr th:nth-of-type(4){
-	width: 30%;
-}
-.admin-tlb tbody tr td:first-of-type{
-	text-align: center;
-}
-.admin-tlb tbody tr td:nth-of-type(3){
-	text-align: center;
-}
+
+/*.admin-tlb{*/
+	/*width: 100%;*/
+	/*background: #f00;*/
+	/*border: 1px solid #333;*/
+/*}*/
+/*
 .admin-tlb tbody tr:nth-of-type(even){
 	background-color: #999;
 }
@@ -149,7 +133,72 @@
 }
 .admin-tlb tbody tr.act{
 	background-color: #0f0;
+}*/
+
+.admin-tlb {
+	width: 100%;
+	cell-space: 0;
+	border: 0;
+	border-spacing: 0;
+	border-collapse: 0;
 }
+.admin-tlb tbody {
+/* Kind of irrelevant unless your .css is alreadt doing something else */
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+	background: transparent;
+}
+.admin-tlb thead {
+	text-align: left;
+}
+.admin-tlb thead th {
+	background: #4c4c4c; /* Old browsers */
+	background: -moz-linear-gradient(top, #4c4c4c 0%, #595959 12%, #666666 25%, #474747 39%, #2c2c2c 50%, #000000 51%, #111111 60%, #2b2b2b 76%, #1c1c1c 91%, #131313 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#4c4c4c), color-stop(12%,#595959), color-stop(25%,#666666), color-stop(39%,#474747), color-stop(50%,#2c2c2c), color-stop(51%,#000000), color-stop(60%,#111111), color-stop(76%,#2b2b2b), color-stop(91%,#1c1c1c), color-stop(100%,#131313)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #4c4c4c 0%,#595959 12%,#666666 25%,#474747 39%,#2c2c2c 50%,#000000 51%,#111111 60%,#2b2b2b 76%,#1c1c1c 91%,#131313 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #4c4c4c 0%,#595959 12%,#666666 25%,#474747 39%,#2c2c2c 50%,#000000 51%,#111111 60%,#2b2b2b 76%,#1c1c1c 91%,#131313 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #4c4c4c 0%,#595959 12%,#666666 25%,#474747 39%,#2c2c2c 50%,#000000 51%,#111111 60%,#2b2b2b 76%,#1c1c1c 91%,#131313 100%); /* IE10+ */
+	background: linear-gradient(to bottom, #4c4c4c 0%,#595959 12%,#666666 25%,#474747 39%,#2c2c2c 50%,#000000 51%,#111111 60%,#2b2b2b 76%,#1c1c1c 91%,#131313 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4c4c4c', endColorstr='#131313',GradientType=0 ); /* IE6-9 */
+	color: #eee;
+	font-size: 18px;
+	font-weight: bold;
+	padding: 12px 15px;
+	border-spacing: 0;
+	border-collapse: 0;
+}
+.admin-tlb td {
+	padding: 3px 10px;
+	border: none;
+
+}
+.admin-tlb tr:nth-child(even) {
+	background: #F2F2F2;
+}
+
+.admin-tlb thead tr th:first-of-type{
+	width: 25%;
+}
+.admin-tlb thead tr th:nth-of-type(2){
+	width: 50%;
+}
+.admin-tlb thead tr th:nth-of-type(3){
+	width: 25%;
+}
+/*.admin-tlb thead tr th:nth-of-type(4){
+	width: 30%;
+}*/
+.admin-tlb tbody tr td:first-of-type{
+	text-align: center;
+}
+.admin-tlb tbody tr td:nth-of-type(3){
+	text-align: center;
+}
+
 #select-from img{
 	bottom: 0;
 	height: 200px;

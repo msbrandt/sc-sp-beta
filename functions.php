@@ -40,26 +40,11 @@ function blank_scripts() {
 
 	wp_enqueue_script( 'soundcloud', '//connect.soundcloud.com/sdk.js' ); 
 	wp_enqueue_script( 'blank-bootstrapjs', get_template_directory_uri() . '/js/bootstrap.min.js', array( 'jquery' ), '20131209', true );
-	
 	wp_register_script( 'sc-script', get_template_directory_uri() . '/js/functions.js', array( 'jquery' ), '20131209', true );
 	wp_localize_script( 'sc-script', 'sc', array(
 		'ajaxurl' => admin_url( 'admin-ajax.php' ),
 	) );	
 	wp_enqueue_script( 'sc-script' );
-
-	wp_enqueue_script( 'leapjs-source', get_template_directory_uri() . '/js/leap.js', array( 'jquery' ), '20131209', true );
-	wp_enqueue_script( 'leapjs-plugins', get_template_directory_uri() . '/js/leap-plugins.js', array( 'jquery' ), '20131209', true );
-	
-	
-	wp_enqueue_script( 'pixijs', get_template_directory_uri() . '/inc/pixijs/bin/pixi.dev.js', array( 'jquery' ), '20131209', true );
-	
-
-	wp_register_script( 'leapjs-fn', get_template_directory_uri() . '/js/leap-functions.js', array( 'jquery' ), '20131209', true );
-	
-	wp_localize_script( 'leapjs-fn', 'fp', array(
-		'path' => get_template_directory_uri(),
-	) );	
-	wp_enqueue_script( 'leapjs-fn' );
 
 }
 add_action( 'wp_enqueue_scripts', 'blank_scripts' );
@@ -160,7 +145,6 @@ function select_songs_handler(){
 							'<td id="sc-id">'.$t_id.'</td>'.
 							'<td id="t-title">'.$t.'</td>'.
 							'<td id="t-duration">'.$new_duration.'</td>'.
-							'<td id="t-art"><div class="artwork" style="backgorund-url: url('.$t_a.')"></div></td>'.
 							'<td id="t-wave" class="hidden-data">'.$t_wave.'</td>'.
 						'</tr>';
 
