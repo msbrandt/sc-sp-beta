@@ -21,7 +21,7 @@ function load_deck($id){
 	</div>
 
 	<div class="progress">
-		<input class="wave-prog" value="0" id="wave-<?php echo $id; ?>" type="range" min='0' max="">
+		<input class="wave-prog" value="0" id="wave-<?php echo $id; ?>" type="range" min='1' max="">
 		
 	</div>
 	<div class="display">

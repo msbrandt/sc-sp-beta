@@ -10,6 +10,8 @@ function load_playlist(){
 	?>
 	</ul>
 </div>
+<audio controls><source src="<?php echo get_template_directory_uri(); ?>/inc/LuckyCharmesSkank.ogg" type="audio/ogg"></audio>
+
 <?php }; ?>
 
 

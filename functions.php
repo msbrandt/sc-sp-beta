@@ -1,7 +1,9 @@
 <?php
  require get_template_directory() . '/inc/my-navbar.php';
  require get_template_directory() . '/views/deck.php';
+ require get_template_directory() . '/views/test-deck.php';
  require get_template_directory() . '/views/playlist.php';
+ require get_template_directory() . '/views/synth.php';
 
 /**
  * blank setup.
@@ -45,9 +47,11 @@ function blank_scripts() {
 	// wp_enqueue_script( 'angluar-script', get_template_directory_uri() . '/bower_components/angular/angular.js', array( 'jquery' ), '20131209', true );
 	// wp_enqueue_script( 'angular-route', get_template_directory_uri() . '/bower_components/angular-route/angular-route.js', array( 'jquery'), '20131209', true );
 	// wp_enqueue_script( 'angular-app', get_template_directory_uri() . '/js/model.js', array( 'jquery'), '20131209', true );
-	wp_register_script( 'sc-script', get_template_directory_uri() . '/js/functions.js', array( 'jquery' ), '20131209', true );
+	// wp_register_script( 'sc-script', get_template_directory_uri() . '/js/functions.js', array( 'jquery' ), '20131209', true );
+	wp_register_script( 'sc-script', get_template_directory_uri() . '/js/synth.js', array( 'jquery' ), '20131209', true );
 	wp_localize_script( 'sc-script', 'sc', array(
 		'ajaxurl' => admin_url( 'admin-ajax.php' ),
+		'tpTag' => get_template_directory_uri()
 	) );	
 	wp_enqueue_script( 'sc-script' );
 

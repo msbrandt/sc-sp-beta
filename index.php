@@ -9,9 +9,12 @@
 
 <section>
 <?php 
-	load_deck('a');
-	load_deck('b');
-	load_playlist();
+	// load_deck('a');
+	// load_deck('b');
+	// load_playlist();
+	// test_deck();
+	synth();
+
 ?>
 
 </section>
