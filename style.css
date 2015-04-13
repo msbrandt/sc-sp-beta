@@ -13,6 +13,7 @@ Version: v1.0*/
 	background: #0f0;
 	width: 100%;
 	overflow: auto;
+	position: relative;
 }
 .sample-display ul{
 	height: 100%;
@@ -25,6 +26,9 @@ Version: v1.0*/
 	width: 100%;
 	padding: 5px 0 5px 10px;
 	font-size: 20px;
+}
+.sample-display ul li:first-of-type{
+	margin-top: 30px;
 }
 .level-cont{
 	height: 100px;
@@ -125,4 +129,13 @@ Version: v1.0*/
 }
 #synth-controls > .row > div.col-sm-6 ul li:hover:before{
 	background-color: #0ff;
+}
+
+.sample-display input{
+	position: fixed;
+	width: 250px;
+}
+
+#synth-controls > .row > div.col-sm-6 ul li[data-active="3"]:before{
+	background-color: #DC8506;
 }
