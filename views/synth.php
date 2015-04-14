@@ -48,7 +48,7 @@ function synth(){
 					<div class="col-sm-2">
 						<label>Tempo</label>
 
-						<input id="tempo" type="range" min="1" max="300" step="1" value="80" orient="vertical">
+						<input id="tempo" type="range" min="1" max="300" step="1" value="80" orient="vertical" oninput="synth.changeTempo(this)">
 						<label id="tempo-val"></label>
 					</div>
 					<div class="col-sm-2">
@@ -65,10 +65,14 @@ function synth(){
 					<div class="col-sm-2">
 						<div class="channels">
 							<ul>
-								<li>1</li>
-								<li>2</li>
-								<li>3</li>
-								<li>4</li>
+								<li class="channel-btns" data-channel="1" data-octive="1" onclick="synth.changeChannel(this)">1</li>
+								<li class="channel-btns" data-channel="0" data-octive="2" onclick="synth.changeChannel(this)">2</li>
+								<li class="channel-btns" data-channel="0" data-octive="3" onclick="synth.changeChannel(this)">3</li>
+								<li class="channel-btns" data-channel="0" data-octive="4" onclick="synth.changeChannel(this)">4</li>
+								<li class="channel-btns" data-channel="0" data-octive="5" onclick="synth.changeChannel(this)">5</li>
+								<li class="channel-btns" data-channel="0" data-octive="6" onclick="synth.changeChannel(this)">6</li>
+								<li class="channel-btns" data-channel="0" data-octive="7" onclick="synth.changeChannel(this)">7</li>
+								<li class="channel-btns" data-channel="0" data-octive="8" onclick="synth.changeChannel(this)">8</li>
 							</ul>
 						</div>
 					</div>
@@ -80,17 +84,18 @@ function synth(){
 							<li class="pad" data-active="3" data-sample="cowbell" onclick="synth.playPads(this)"></li>
 							<li class="pad" data-active="3" data-sample="kick" onclick="synth.playPads(this)"></li>
 							<li class="pad" data-active="3" data-sample="snare" onclick="synth.playPads(this)"></li>
-							<li class="pad" data-active="3" data-sample="perc"onclick="synth.playPads(this)"></li>
-							<li class="pad" data-active="3" data-sample="tom" onclick="synth.playPads(this)"></li>
 							<li class="pad" data-active="0" data-sample="nana" onclick="synth.playPads(this)"></li>
 							<li class="pad" data-active="0" data-sample="nana" onclick="synth.playPads(this)"></li>
+							<li class="pad" data-active="0" data-sample="nana" onclick="synth.playPads(this)"></li>
+							<li class="pad" data-active="0" data-sample="nana" onclick="synth.playPads(this)"></li>
+						
 						</ul>
 
 					</div>
 					<div class="col-sm-6">
 						<ul>
-							<li class="pad" data-active="0" data-sample="nana" onclick="synth.playPads(this)"></li>
-							<li class="pad" data-active="0" data-sample="nana" onclick="synth.playPads(this)"></li>
+							<li class="pad" data-active="3" data-sample="perc"onclick="synth.playPads(this)"></li>
+							<li class="pad" data-active="3" data-sample="tom" onclick="synth.playPads(this)"></li>
 							<li class="pad" data-active="0" data-sample="nana" onclick="synth.playPads(this)"></li>
 							<li class="pad" data-active="1" data-sample="nana" onclick="synth.playPads(this)"></li>
 							<li class="pad" data-active="0" data-sample="nana" onclick="synth.playPads(this)"></li>

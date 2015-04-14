@@ -1,19 +1,18 @@
 var ctx;
 var BUFFERS = {};
 var SOURCES = [];
+var playSrc = [];
 var synth = {playing:false, FREQ_MUL: 7000, QUAL_MUL: 30};
 var synthBtns = document.getElementsByClassName('synth-btns');
-var channelBtns = document.getElementsByClassName('channel-btns');
 var pads = document.getElementsByClassName('pad');
 var playBtn = document.querySelector('#play-btn');
-// var tempoInp = document.getElementById('tempo');
+var tempoInp = document.getElementById('tempo');
 var tempoDisply = document.getElementById('tempo-val');
 var filterInp = document.getElementById('filter-inp');
 var filterDis = document.getElementById('filter-val');
 
-
-// var tempo = tempoInp.value;
-// tempoDisply.innerHTML = tempo;
+var tempoInt = tempoInp.value;
+tempoDisply.innerHTML = tempoInt;
 // tempoInp.addEventListener('input', changeTempo);
 var filters = [
   'lowpass',
@@ -28,17 +27,33 @@ var filters = [
 changeFilterDis();
 
 var BUFFERS_TO_LOAD = {
-		clap: sc.tpTag+'/inc/808/clap-808.wav',
-		cowbell: sc.tpTag+'/inc/808/cowbell-808.wav',
-		crash: sc.tpTag+'/inc/808/crash-808.wav',
-		hihat: sc.tpTag+'/inc/808/hihat-808.wav',
-		kick: sc.tpTag+'/inc/808/kick-808.wav',
-		openhat: sc.tpTag+'/inc/808/openhat-808.wav',
-		perc: sc.tpTag+'/inc/808/perc-808.wav',
-		snare: sc.tpTag+'/inc/808/snare-808.wav',
+  eight08: {
+    clap: sc.tpTag+'/inc/808/clap-808.wav',
+    cowbell: sc.tpTag+'/inc/808/cowbell-808.wav',
+    crash: sc.tpTag+'/inc/808/crash-808.wav',
+    hihat: sc.tpTag+'/inc/808/hihat-808.wav',
+    kick: sc.tpTag+'/inc/808/kick-808.wav',
+    openhat: sc.tpTag+'/inc/808/openhat-808.wav',
+    perc: sc.tpTag+'/inc/808/perc-808.wav',
+    snare: sc.tpTag+'/inc/808/snare-808.wav',
     tom: sc.tpTag+'/inc/808/tom-808.wav',
-		test: sc.tpTag+'/inc/conv/snare-dist01.wav'
-    // test2: sc.tpTag+'/inc/Map.wav'
+    test: sc.tpTag+'/inc/conv/snare-dist01.wav'
+  },
+  aco: {
+    crash: sc.tpTag+'/inc/aco/c-crash-acoustic.wav',
+    hithat1: sc.tpTag+'/inc/aco/c-hihat-acoustic01.wav',
+    hithat2: sc.tpTag+'/inc/aco/c-hihat-acoustic02.wav',
+    kick1: sc.tpTag+'/inc/aco/c-kick-acoustic01.wav',
+    kick2: sc.tpTag+'/inc/aco/c-kick-acoustic02.wav',
+    kick3: sc.tpTag+'/inc/aco/c-kick-big.wav',
+    openhat: sc.tpTag+'/inc/aco/c-openhat-acoustic01.wav',
+    ride: sc.tpTag+'/inc/aco/c-ride-acoustic01.wav',
+    snare1: sc.tpTag+'/inc/aco/c-snare-acoustic01.wav',
+    snare2: sc.tpTag+'/inc/aco/c-snare-acoustic02.wav',
+    tom1: sc.tpTag+'/inc/aco/c-tom-acoustic01.wav',
+    tom2: sc.tpTag+'/inc/aco/c-tom-acoustic02.wav'
+  }
+
 	};
 
 // function playSound(buffer, time){
@@ -66,43 +81,151 @@ var BUFFERS_TO_LOAD = {
 //     gainNode: gainNode
 //   };
 // }
-function trackTime(){
-  var startTime = ctx.currentTime + 0.100;
-  var tempo = 80;
-  var en = (60 / tempo) / 2;
 
-  for(var bar = 0; bar < 100; bar++){
-    var time = startTime + bar * 8 * en;
-    return time;
-  }
-}
 synth.loop = function(el){
   if(el.dataset.isactive == 0){
+    //Turn Loop on
     el.dataset.isactive = 1;
+    // setInterval(function(){
+      // console.log(SOURCES);
+      // barLoop(true);
+    // }, (60 / 80) /2);
+    
   }else{
+    //Turn Loop Off
+
     el.dataset.isactive = 0;
+        // console.log(SOURCES);
+    // console.log(this);
+    for(var x=0; x<SOURCES.length; x++){
+      SOURCES[x].stop();
+    }
+    for(var i=0; i<pads.length; i++){
+      if(pads[i].dataset.active == 4){
+        var chg = pads[i];
+        chg.dataset.active = 3;
+
+      }
+
+    }
+    // barLoop(false);
 
   }
+
   // el.dataset.isactive ? console.log('yes') : console.log('no');
 }
+var blaray = [];
+function playLoop(buffer, time){
+      var theSrc = ctx.createBufferSource();
+
+      theSrc.buffer = BUFFERS[buffer];
+
+      theSrc.connect(ctx.destination);
+      SOURCES.push(theSrc);
+      
+      if(!theSrc.start){
+        theSrc.start = theSrc.noteOn;
+      }
+      theSrc.start(time);
+}
+function getChannel(){
+    var channels = document.getElementsByClassName('channel-btns');
+   for (var i=0; i<channels.length; i++) {
+      if(channels[i].dataset.channel == 1){
+        var useChannel = channels[i].dataset.octive;
+
+      }
+    }; 
+    return useChannel; 
+}
+function loopSound(sample){
+    playSrc.push(sample);
+    var ch = getChannel();
+    console.log(BUFFERS);
+
+    var st = ctx.currentTime + 0.100;
+    var t = tempoInp.value;
+    var ent = (60 / t) / 2;
+    
+    for(var bar = 0; bar < 100; bar++){
+      var time = st + bar * 8 * ent;
+      if(ch == 1){
+        for(var i = 0; i<1; i++){
+          playLoop(sample, time + i * ent);
+        }
+      }else if(ch == 2){
+        for(var i = 0; i<2; i++){
+          playLoop(sample, time + i * ent);
+        }
+      }else if(ch == 3){
+        for(var i = 0; i<3; i++){
+          playLoop(sample, time + i * ent);
+        }        
+      }else if(ch == 4){
+        for(var i = 0; i<4; i++){
+          playLoop(sample, time + i * ent);
+        }
+      }else if(ch == 5){
+        for(var i = 4; i<5; i++){
+          playLoop(sample, time + i * ent);
+        }
+      }else if(ch == 6){
+        for(var i = 5; i<6; i++){
+          playLoop(sample, time + i * ent);
+        }
+      }else if(ch == 7){
+        for(var i = 6; i<7; i++){
+          playLoop(sample, time + i * ent);
+        }
+      }else if(ch == 8){
+        for(var i = 7; i<8; i++){
+          playLoop(sample, time + i * ent);
+        }
+      }
+      // playLoop(sample, time + 8 * ent);
+      
+      // for(var i = 0; i<8; i++){
+      //   playLoop(sample, time + i * ent);
+      //   // console.log((time + i * ent));
+
+      // }
+
+    }
+  
+}
+
 synth.playPads = function(el){
   var sample = String(el.dataset.sample);
-  var useSrc = ctx.createBufferSource();
-  var x = trackTime();
-  // console.log(x);
   var tl = document.querySelector('#toogle-loop');
-  useSrc.buffer = BUFFERS[sample];
-  useSrc.connect(ctx.destination);
+
+  // el.dataset.active = 1;
   if(tl.dataset.isactive == 1){
-    useSrc.loop = true;
+    if(el.dataset.active == 4){
+      el.dataset.active = 3;
 
-  }
-  if(!useSrc.start){
-    useSrc.start = useSrc.noteOn;
+    }else if(el.dataset.active == 3){
+      //Bar Loop code goes here!
+      el.dataset.active = 4;
+      // this.src = useSrc;
+      loopSound(sample);
+      // console.log(this);
+    }
+  }else{
+      //Single play music goes here!
+      var useSrc = ctx.createBufferSource();
+
+      useSrc.buffer = BUFFERS[sample];
+
+      useSrc.connect(ctx.destination);
+
+      if(!useSrc.start){
+        useSrc.start = useSrc.noteOn;
+      }
+
+      useSrc.start(0);
+      this.src = useSrc;
   }
 
-  useSrc.start(0);
-  this.src = useSrc;
 
 }
 synth.play = function(){
@@ -134,53 +257,7 @@ synth.play = function(){
   this.src = src;
   playBtn.dataset.isactive = 1;
 
-  // var clap = BUFFERS.clap;
-  // var cb = BUFFERS.cowbell;
-  // var crash = BUFFERS.crash;
-  // var hihat = BUFFERS.hihat;
-  // var kick = BUFFERS.kick;
-  // var openhat = BUFFERS.openhat;
-  // var perc = BUFFERS.perc;
-  // var snare = BUFFERS.snare;
-  // var tom = BUFFERS.tom; 
-  // var ent = (60 / tempo) / 2;
-
-
- //  var startTime = ctx.currentTime + 0.100;
-
- //  var time = startTime + bar * 8 * ent;
- //  var newTime = time;
-
- //  tempoInp.addEventListener('input', function(){
- //    tempoDisply.innerHTML = this.value;
- //    var newent = (60 / this.value) / 2;
- //    newTime = startTime + bar * 8 * newent; 
- //  });
-
-	// var eightNoteTime = (60 / tempo) / 2;
-
-// Loop to play sound
-	// for(var bar = 0; bar < 100; bar++){
-	// 	var time = startTime + bar * 8 * ent;
- //    // playSound(kick, time);
- //    // playSound(kick, time + 4 * eightNoteTime);
- //    // playSound(snare, time + 2 * eightNoteTime);
- //    // playSound(snare, time + 6 * eightNoteTime);
- //    // playSound(openhat, time + 8 * eightNoteTime);
- //    // playSound(tom, time + 12 * eightNoteTime);
-
- //    for(var i = 0; i<4; i++){
- //      // playSound(perc, time + i * eightNoteTime);
- //    }    
-		
-	// 	for(var i = 0; i<8; i++){
-
-	// 		// playSound(hihat, time + i * ent);
-
-	// 	}
-	// }
-	
-
+  
 }
 
 synth.stop = function(){
@@ -212,10 +289,10 @@ synth.changeFX = function(el){
 synth.changeEQ = function(el){
   this.filter.Q.value = el.value * this.QUAL_MUL;
 }
-// synth.changeTempo = function(el){
-//   tempo = el.value;
-//   tempoDisply.innerHTML = tempo;
-// }
+synth.changeTempo = function(el){
+  tempo = el.value;
+  tempoDisply.innerHTML = tempo;
+}
 function getLoop(){
   var is_active = this.dataset.isactive;
   return is_active;
@@ -233,24 +310,47 @@ function changeFilterDis(){
 
   // console.log(filters[f]);
 }
+synth.changeChannel = function(el){
+  var chBtns = document.getElementsByClassName('channel-btns');
+  for(var i=0; i<chBtns.length; i++){
+    chBtns[i].dataset.channel = 0;
+  }
+  el.dataset.channel = 1;
+}
 //*****************Loading functions.....DO NOT TOUCH!****************************************
+var Tracks = function(p, n, pa){
+      this.playlist = p,
+      this.name = n,
+      this.path = pa;
+} 
 function loadBuffers() {
   // Array-ify
   var names = [];
   var paths = [];
-  for (var name in BUFFERS_TO_LOAD) {
-    var path = BUFFERS_TO_LOAD[name];
-    names.push(name);
-    paths.push(path);
+  var n = {}
+  
+  for (var playlist in BUFFERS_TO_LOAD) {
+    for(var name in BUFFERS_TO_LOAD[playlist]){
+      var path = BUFFERS_TO_LOAD[playlist][name];
+      names.push(new Tracks(playlist,name,path));
+      // names.push(BUFFERS_TO_LOAD[playlist]);
+      paths.push(path);
+    }
+
   }
   bufferLoader = new BufferLoader(ctx, paths, function(bufferList) {
     for (var i = 0; i < bufferList.length; i++) {
       var buffer = bufferList[i];
-      var name = names[i];
+      var name = names[i].name;
+      // var pl = names[i].playlist; 
       BUFFERS[name] = buffer;
+      // console.log(BUFFERS);
+      
     }
   });
   bufferLoader.load();
+
+  // console.log(BUFFERS);
 }
 
 document.addEventListener('DOMContentLoaded', function() {
